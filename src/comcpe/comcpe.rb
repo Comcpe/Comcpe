@@ -58,9 +58,8 @@ class Comcpe
   def handleCommand(cmd)
 
     @logger.debug(cmd)
-    if cmd == 'exit'
-      killComcpe
-    end
+
+
 
   end
 
