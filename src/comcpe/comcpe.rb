@@ -50,8 +50,8 @@ class Comcpe
   end
 
   def run
-    while @running
-
+    while isRunning
+      sleep(1)
     end
   end
 
@@ -81,4 +81,3 @@ end
 
 comcpe = Comcpe.new
 comcpe.run
-comcpe.shutdown

@@ -27,7 +27,9 @@ class NetworkThread
     @thread = Thread.new do
 
       while @main.isRunning
-        @main.getLogger.debug(server.recvfrom(1024*1024*8)[1])
+        data = server.recvfrom(1024*1024*8)
+        packet = Packet.get(data)
+        @main.getLogger.debug(data[1])
       end
 
       server.shutdown
