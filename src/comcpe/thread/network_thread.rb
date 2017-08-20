@@ -14,18 +14,33 @@ class NetworkThread
   end
 
   public def execute
-    @thread = Thread.new do
-      server = UDPSocket.new
-      @main.getLogger.info('hey')
-      # sockaddr = Socket.sockaddr_in(19132, "0.0.0.0")
-      p server.bind('0.0.0.0', 19132)
+    server = UDPSocket.open
 
-      @main.getLogger.info('hey')
+    begin
+      server.bind('0.0.0.0', 19132)
+    rescue
+      @main.getLogger.critical('FAILED TO BIND TO 19132')
+      @main.getLogger.critical('shutdown the server...')
+      @main.killComcpe
+    end
+
+    @thread = Thread.new do
 
       while @main.isRunning
-        @main.getLogger.debug(server.recvfrom(1024*1024*8))
-        print "end!\n"
+        @main.getLogger.debug(server.recvfrom(1024*1024*8)[1])
       end
+
+      server.shutdown
+
     end
+
   end
+
+  def kill
+    if !@thread.nil?
+      @thread.kill
+    end
+
+  end
+
 end

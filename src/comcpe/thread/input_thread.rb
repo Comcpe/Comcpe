@@ -21,7 +21,10 @@ class InputThread
   end
 
   def kill
-    @thread.kill
+    if !@thread.nil?
+      @thread.kill
+    end
+
   end
 
 end

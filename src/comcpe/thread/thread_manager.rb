@@ -27,24 +27,40 @@ class ThreadManager
     return @threads.count - 1
   end
 
+  def execute(ids)
+    ids.each { | id |
+      @threads[id].execute
+    }
+
+  end
+
   def killThread(id)
-    thread = @threads.at(id)
+    thread = @threads[id]
 
     if thread.nil?
       return false
     end
 
+    print thread
     thread.kill
   end
 
   def killAllThreads
 
-    [0...@threads.count].each { |id|
+    @threads.each { |thread|
 
-      killThread(@threads.at(id))
+      if thread.nil?
+        next
+      end
+
+      thread.kill
 
     }
 
+  end
+
+  def printThreads
+    puts @threads
   end
 
 end

@@ -26,6 +26,7 @@ class Logger
     CE.fg(:white)
         .pickup('Info', :h_cyan, nil, nil)
         .pickup('Debug', :green, nil, nil)
+        .pickup('Critical', :red, nil, nil)
 
     printf("#{msg}\n")
   end
@@ -38,6 +39,10 @@ class Logger
     if @debug
       writeMessage("Debug > #{msg}")
     end
+  end
+
+  def critical(msg)
+    writeMessage("Critical > #{msg}")
   end
 
 end

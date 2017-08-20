@@ -23,21 +23,26 @@ class Comcpe
     @running = true
     @logger = Logger.new(true)
 
-    @threadManager = ThreadManager.new
-    @threadManager.registerThread(InputThread.new(self, @logger).execute)
-    @threadManager.registerThread(NetworkThread.new(self).execute)
 
     boot
+
+    @threadManager = ThreadManager.new
+
+    ids = []
+
+    ids << @threadManager.registerThread(InputThread.new(self, @logger))
+    ids << @threadManager.registerThread(NetworkThread.new(self))
+    @threadManager.execute(ids)
+
 
   end
 
   def boot
     @logger.info('Welcome to Comcpe 0.1 beta!')
-
   end
 
   def shutdown
-    killComcpe
+    @threadManager.killAllThreads
   end
 
   def setup
@@ -54,12 +59,12 @@ class Comcpe
 
     @logger.debug(cmd)
     if cmd == 'exit'
-      shutdown
+      killComcpe
     end
 
   end
 
-  private def killComcpe
+  def killComcpe
     @running = false
   end
 
@@ -76,3 +81,4 @@ end
 
 comcpe = Comcpe.new
 comcpe.run
+comcpe.shutdown
