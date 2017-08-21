@@ -19,11 +19,11 @@ class Comcpe
   # Access
   attr_reader :running
 
+  @players = []
 
   def initialize
     @running = true
     @logger = Logger.new(false)
-
 
     boot
 
@@ -40,17 +40,19 @@ class Comcpe
 
   # Start up
   def boot
-    @logger.info('Welcome to Comcpe 0.1 beta!')
+    @logger.info("Welcome to Comcpe #{@@VERSION}")
     CommandManager.register('exit', ExitCommand)
   end
 
   # Shutdown Server
   def shutdown
 
-    @threadManager.printThreads
+    @logger.info('shutdown server...')
+    threadCount = @threadManager.getThreadsCount
     # killComcpe
     @threadManager.killAllThreads
 
+    @logger.info("kill #{threadCount} threads")
   end
 
   # First Boot
@@ -61,6 +63,7 @@ class Comcpe
   # Running
   def run
     while isRunning
+      sleep(0.02)
     end
   end
 
@@ -92,6 +95,10 @@ class Comcpe
 
   def getLogger
     return @logger
+  end
+
+  def broadcastMessage
+
   end
 
 end

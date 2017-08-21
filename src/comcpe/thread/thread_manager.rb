@@ -63,4 +63,8 @@ class ThreadManager
     puts @threads
   end
 
+  def getThreadsCount
+    return @threads.count
+  end
+
 end
