@@ -10,7 +10,8 @@ require './utils/logger'
 require './thread/thread_manager'
 require './thread/input_thread'
 require './thread/network_thread'
-
+require './command/command_manager'
+require './command/default/exit_command'
 class Comcpe
 
   @@VERSION = '0.1 BETA'
@@ -21,7 +22,7 @@ class Comcpe
 
   def initialize
     @running = true
-    @logger = Logger.new(true)
+    @logger = Logger.new(false)
 
 
     boot
@@ -40,11 +41,16 @@ class Comcpe
   # Start up
   def boot
     @logger.info('Welcome to Comcpe 0.1 beta!')
+    CommandManager.register('exit', ExitCommand)
   end
 
   # Shutdown Server
   def shutdown
+
+    @threadManager.printThreads
+    # killComcpe
     @threadManager.killAllThreads
+
   end
 
   # First Boot
@@ -55,14 +61,23 @@ class Comcpe
   # Running
   def run
     while isRunning
-      sleep(1)
     end
   end
 
-  # Catch Command ()
+  # Catch Command
+  # @param [Player | Comcpe] sender
+  # @param [String] cmd
   def handleCommand(sender, cmd)
 
     @logger.debug(cmd)
+    command = CommandManager.get(cmd)
+
+    if command.nil?
+      @logger.info('Command not found!')
+      return
+    end
+
+    command.execute(sender, self)
 
   end
 
@@ -83,3 +98,4 @@ end
 
 comcpe = Comcpe.new
 comcpe.run
+comcpe.shutdown

@@ -1,15 +1,18 @@
 class Command
 
-  public # @param [Player | Comcpe] sender
-      def initialize(args)
+  # 初期化
+  # @param [Player | Comcpe] sender
+  def initialize(args)
     @args = args
   end
 
-  public def execute
+  # 実行
+  # @param [Comcpe] comcpe
+  def execute(sender, comcpe)
 
   end
 
-  public def getArgs
+  def getArgs
     return @args
   end
 end
