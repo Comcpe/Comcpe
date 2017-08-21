@@ -1,5 +1,6 @@
 
-require './command/command_map'
+require 'command/command_map'
+
 class CommandManager
 
   # コマンド取得

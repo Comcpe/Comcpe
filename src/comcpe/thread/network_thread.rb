@@ -28,8 +28,7 @@ class NetworkThread
 
       while @main.isRunning
         data = server.recvfrom(1024*1024*8)
-        packet = Packet.get(data)
-        @main.getLogger.debug(data[1])
+        @main.handlePacket(data[1][2], data[1][1], data[0].unpack('h*')[0])
       end
 
       server.shutdown

@@ -1,5 +1,5 @@
 
-require './command/command'
+require 'command/command'
 
 class ExitCommand < Command
 

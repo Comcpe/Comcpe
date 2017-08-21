@@ -1,0 +1,2 @@
+class QueryHandler
+end

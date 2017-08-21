@@ -1,7 +1,9 @@
 =begin
  sayCommand! /say <params...>
 =end
-require './command/command'
+
+
+require 'command/command'
 
 class SayCommand < Command
 

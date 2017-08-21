@@ -6,13 +6,16 @@
 # ##
 
 # require
-require './utils/logger'
-require './thread/thread_manager'
-require './thread/input_thread'
-require './thread/network_thread'
-require './command/command_manager'
-require './command/default/exit_command'
-require './command/default/say_command'
+
+$LOAD_PATH.unshift File.dirname(__FILE__)
+
+require 'utils/logger'
+require 'thread/thread_manager'
+require 'thread/input_thread'
+require 'thread/network_thread'
+require 'command/command_manager'
+require 'command/default/exit_command'
+require 'command/default/say_command'
 
 class Comcpe
 
@@ -25,7 +28,7 @@ class Comcpe
 
   def initialize
     @running = true
-    @logger = Logger.new(false)
+    @logger = Logger.new(true)
 
     boot
 
@@ -86,6 +89,14 @@ class Comcpe
 
     command.execute(sender, self)
 
+  end
+
+  def handlePacket(ip, port, payload)
+
+    @logger.debug("#{ip}:#{port}, #{payload[2...4]}")
+    if(payload[0...2] == '10')
+
+    end
   end
 
   def killComcpe
