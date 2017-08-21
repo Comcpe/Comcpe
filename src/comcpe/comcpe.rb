@@ -37,29 +37,32 @@ class Comcpe
 
   end
 
+  # Start up
   def boot
     @logger.info('Welcome to Comcpe 0.1 beta!')
   end
 
+  # Shutdown Server
   def shutdown
     @threadManager.killAllThreads
   end
 
+  # First Boot
   def setup
 
   end
 
+  # Running
   def run
     while isRunning
       sleep(1)
     end
   end
 
-  def handleCommand(cmd)
+  # Catch Command ()
+  def handleCommand(sender, cmd)
 
     @logger.debug(cmd)
-
-
 
   end
 
