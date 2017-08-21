@@ -13,7 +13,7 @@ class InputThread
     @thread = Thread.new do
 
       while @main.isRunning
-        @main.handleCommand(@logger.readCommand)
+        @main.handleCommand(@main, @logger.readCommand)
       end
 
     end
