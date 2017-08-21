@@ -12,6 +12,8 @@ require './thread/input_thread'
 require './thread/network_thread'
 require './command/command_manager'
 require './command/default/exit_command'
+require './command/default/say_command'
+
 class Comcpe
 
   @@VERSION = '0.1 BETA'
@@ -41,7 +43,9 @@ class Comcpe
   # Start up
   def boot
     @logger.info("Welcome to Comcpe #{@@VERSION}")
+    # Command 登録
     CommandManager.register('exit', ExitCommand)
+    CommandManager.register('say', SayCommand)
   end
 
   # Shutdown Server
@@ -97,9 +101,18 @@ class Comcpe
     return @logger
   end
 
-  def broadcastMessage
-
+  def broadcastMessage (msg)
+    @logger.info(msg)
   end
+
+  def sendMessage(msg)
+    @logger.info(msg)
+  end
+
+  def getName
+    return 'Comcpe'
+  end
+
 
 end
 
