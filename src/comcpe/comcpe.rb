@@ -91,12 +91,8 @@ class Comcpe
 
   end
 
-  def handlePacket(ip, port, payload)
+  def handlePacket(packet)
 
-    @logger.debug("#{ip}:#{port}, #{payload[2...4]}")
-    if(payload[0...2] == '10')
-
-    end
   end
 
   def killComcpe

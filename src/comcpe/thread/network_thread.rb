@@ -5,15 +5,16 @@
 =end
 
 require 'socket'
-
+require '../raknet/session_manager'
 class NetworkThread
 
-  public # @param [Comcpe] main
-      def initialize (main)
+
+  def initialize (main)
     @main = main
+    @sessionManager = SessionManager.new(main)
   end
 
-  public def execute
+  def execute
     server = UDPSocket.open
 
     begin
@@ -28,12 +29,18 @@ class NetworkThread
 
       while @main.isRunning
         data = server.recvfrom(1024*1024*8)
-        @main.handlePacket(data[1][2], data[1][1], data[0].unpack('h*')[0])
+        @main.getLogger.info(data)
+        @sessionManager.receivePacket(data[0], data[1])
+
       end
 
       server.shutdown
 
     end
+
+  end
+
+  def sendPacket
 
   end
 
