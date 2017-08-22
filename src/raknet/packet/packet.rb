@@ -1,32 +1,49 @@
+require '../raknet/binary'
+
 class Packet
 
-  @@id = -1
+  ID = -1
 
   attr_accessor :buffer
 
   attr_reader :offset
-  @offset = 0
+
+  @buffer = ''
+
+  def initialize
+    @offset = 0
+    @buffer = ''
+  end
 
   def self.getId
-    return @@id
+    return self::ID
+  end
+
+  def setBuffer(buffer)
+    @buffer = buffer
+  end
+
+  def getBuffer
+    return @buffer
   end
 
   def getData(length)
     if length < 0
-      @offset = buffer.length - 1
-      return '';
+      @offset = @buffer.length - 1
+      return ''
 
     elsif length.nil?
-      return buffer[@offset...length]
+      return @buffer[@offset...length]
     end
 
+    start = @offset
     @offset += length
-    return buffer[@offset-length...length]
+    return @buffer[start, length]
 
   end
 
   def getInt
-    return getData(4)
+    return Binary.readInt(getData(4))
   end
 
   def getByte
@@ -39,7 +56,7 @@ class Packet
   end
 
   def getLong
-
+    return Binary.readLong(getData(8))
   end
 
   def getFloat
@@ -66,8 +83,8 @@ class Packet
 
   end
 
-  def putLong
-
+  def putLong(v)
+    @buffer += Binary.writeLong(v)
   end
 
   def putFloat
@@ -76,6 +93,15 @@ class Packet
 
   def putString
 
+  end
+
+  def encode(id)
+    @buffer = id.chr
+  end
+
+  def decode
+    @offset = 1
+    return
   end
 
 end

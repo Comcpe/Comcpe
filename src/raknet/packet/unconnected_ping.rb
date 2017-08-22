@@ -1,16 +1,19 @@
 require '../raknet/packet/packet'
 
-class UnconnectedPing < Packet
+class UNCONNECTED_PING < Packet
 
-  @@id = 0x01
+  ID = 0x01
+  @pingID = 0
 
   attr_accessor :pingID
 
   def encode
-
+    super
   end
 
   def decode
+    super
+
     @pingID = getLong
   end
 
